@@ -1,2 +1,21 @@
-- name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-app:latest
+name: Docker Build and Verify
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify Docker version
+        run: |
+          docker --version
+          docker info
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:latest
