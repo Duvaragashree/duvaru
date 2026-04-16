@@ -1,0 +1,26 @@
+name: Docker Build and Verify
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Verify Docker installation and version
+      # GitHub-hosted runners (ubuntu-latest) come with Docker pre-installed.
+      - name: Verify Docker version
+        run: |
+          docker --version
+          docker info
+
+      # 3. Build the Docker image
+      # Replace 'my-image-name' with your preferred image name
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
